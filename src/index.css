@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
-/* Hide scrollbar across all elements and body while retaining scrollability */
-*::-webkit-scrollbar {
-  display: none;
-}
-
-* {
+/* Hide vertical body scrollbar while keeping scroll enabled */
+html, body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Allow smooth horizontal touch scrolling for navigation */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+

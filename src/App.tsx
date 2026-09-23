@@ -450,15 +450,15 @@ export default function App() {
       </header>
 
       {/* Navigation Tabs */}
-      <div className={`border-b px-6 flex items-center space-x-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] ${
-        theme === 'light' ? 'border-slate-200 bg-white' : 'border-slate-800 bg-slate-900/50'
+      <div className={`border-b p-4 grid grid-cols-2 sm:grid-cols-5 gap-2.5 ${
+        theme === 'light' ? 'border-slate-200 bg-white shadow-xs' : 'border-slate-800 bg-slate-900/60 shadow-xs'
       }`}>
         {[
-          { id: 'home', label: '📍 My Location Weather', icon: MapPin },
-          { id: 'rain', label: '🌧️ All-India Rainfall Map', icon: Droplets },
-          { id: 'predictor', label: '🔮 AI Disaster & Weather Predictor', icon: Activity },
+          { id: 'home', label: '📍 My Location', icon: MapPin },
+          { id: 'rain', label: '🌧️ Rainfall Map', icon: Droplets },
+          { id: 'predictor', label: '🔮 AI Predictor', icon: Activity },
           { id: 'alerts', label: '⚠️ Weather Alerts', icon: ShieldAlert },
-          { id: 'assistant', label: '🤖 Weather AI Assistant', icon: FileText },
+          { id: 'assistant', label: '🤖 AI Assistant', icon: FileText },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -466,14 +466,16 @@ export default function App() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center space-x-2 px-4 sm:px-5 py-3 text-xs sm:text-sm font-medium border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`flex items-center justify-center space-x-2 px-3 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
                 isActive
-                  ? 'border-blue-600 text-blue-600 font-semibold bg-blue-50/50'
-                  : 'border-transparent text-slate-500 hover:text-slate-900'
+                  ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-500/20'
+                  : theme === 'light'
+                  ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                  : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-900'
               }`}
             >
-              <Icon className="w-4 h-4" />
-              <span>{tab.label}</span>
+              <Icon className="w-4 h-4 shrink-0" />
+              <span className="truncate">{tab.label}</span>
             </button>
           );
         })}
