@@ -99,10 +99,18 @@ const EXTENSIVE_INDIA_LOCATIONS: CityWeather[] = [
 ];
 
 export default function App() {
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [activeTab, setActiveTab] = useState<'home' | 'rain' | 'alerts' | 'assistant'>('home');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const [gpsWeather, setGpsWeather] = useState<{
     cityName: string;
@@ -133,7 +141,7 @@ export default function App() {
   const [searchingDynamic, setSearchingDynamic] = useState<boolean>(false);
 
   const [aiPrompt, setAiPrompt] = useState<string>('');
-  const [aiResponse, setAiResponse] = useState<string>('Hello! I am your WeatherEye AI assistant. Ask me anything about rainfall forecasts, weather conditions, districts, or safety alerts across India.');
+  const [aiResponse, setAiResponse] = useState<string>('Hello! I am your weather and climate assistant. Feel free to ask about live rainfall forecasts, regional weather conditions, or safety advisories across India.');
   const [aiLoading, setAiLoading] = useState<boolean>(false);
 
   // Predictor state
@@ -406,6 +414,34 @@ export default function App() {
     return matchesFilter;
   });
 
+  if (showWelcome) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-950 text-white p-6 transition-opacity duration-500">
+        <div className="relative mb-6">
+          <div className="absolute -inset-4 rounded-full bg-blue-500/20 blur-xl animate-pulse"></div>
+          <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-blue-600 via-cyan-500 to-indigo-600 flex items-center justify-center shadow-2xl shadow-blue-500/50">
+            <CloudRain className="w-12 h-12 text-white animate-bounce" />
+          </div>
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-center mb-1 bg-gradient-to-r from-blue-200 via-white to-cyan-200 bg-clip-text text-transparent">
+          WeatherEye-AI
+        </h1>
+        <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wider uppercase mb-4 shadow-sm">
+          by TECH NOVA
+        </div>
+        <p className="text-sm sm:text-base text-blue-200/80 font-medium text-center mb-8 max-w-md">
+          Live Rainfall Tracking, Location Weather & Advanced Climate Intelligence
+        </p>
+        <div className="w-48 h-1.5 bg-blue-950 rounded-full overflow-hidden border border-blue-800/50">
+          <div className="h-full bg-gradient-to-r from-blue-400 to-cyan-400 animate-[pulse_1.5s_infinite] w-full rounded-full"></div>
+        </div>
+        <p className="text-xs font-mono text-blue-300/60 mt-4 tracking-widest uppercase">
+          Loading Meteorological Data...
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-200 ${
       theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-950 text-slate-100'
@@ -482,7 +518,7 @@ export default function App() {
       </div>
 
       {/* Main Body */}
-      <main className="flex-1 p-4 sm:p-6 max-w-6xl mx-auto w-full space-y-6">
+      <main key={activeTab} className="flex-1 p-4 sm:p-6 max-w-6xl mx-auto w-full space-y-6 animate-fade-in">
 
         {/* TAB 1: MY LOCATION WEATHER */}
         {activeTab === 'home' && (
