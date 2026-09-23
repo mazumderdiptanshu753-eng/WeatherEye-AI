@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* Hide scrollbar across all elements and body while retaining scrollability */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

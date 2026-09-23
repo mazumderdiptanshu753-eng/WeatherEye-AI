@@ -1,6 +1,6 @@
 {
-  "name": "AeroMesh AI",
-  "description": "Automated spherical GNN tracking and amplitude-preserving diffusion downscaling for 5km extreme weather impact prediction.",
+  "name": "WeatherEye-AI",
+  "description": "Real-time All-India rainfall tracking, spherical GNN anomaly prediction, and amplitude-preserving diffusion downscaling.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
